@@ -7,6 +7,8 @@
 - Microsoft Visual Studio Community 2022
 - Microsoft C++ Desktop Development Package
 
-### TODO
-- ゆうしゃがパワーをもらってhpを回復する
-- すらいむが水を吸ってhpを回復する
+### これからやってみたいこと：
+- ゆうしゃのパワーを制限する
+- すらいむのhp回復量をランダムにする
+- easy, normal, hard モードを導入する
+- ゲームを終了する（諦める）ことができるようにする

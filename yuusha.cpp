@@ -40,10 +40,25 @@ int main(void)
         printf("ゆうしゃ%sのターン\n", yuusha);
         printf("ダメージを入力してください:");
         scanf_s("%d", &yuusha_damage);
+        //入力したダメージを10より小さくする
+        while (yuusha_damage > 10) {
+            printf("10よりちいさいダメージを入力してください。\n");
+            printf("ダメージを入力してください:");
+            scanf_s("%d", &yuusha_damage);
+            if (yuusha_damage <= 10) {
+                break;
+            }
+        }
         slime_hp -= yuusha_damage;
         printf("すらいむが%dダメージをうけました！\n\n", yuusha_damage);
+        //すらいむのhpが1になる場合
+        if (slime_hp == 1) {
+            slime_hp += 3;
+            printf("すらいむがみずをすって3 hpをかいふくしました！\n\n");
+        }
         //すらいむを倒した場合
         if (slime_hp <= 0) {
+            slime_hp = 0;
             printf("ゆうしゃ%sのhp:%d\n", yuusha, yuusha_hp);
             printhp(yuusha_hp);
             printf("すらいむのhp:%d\n", slime_hp);
@@ -52,9 +67,14 @@ int main(void)
             break;
         }
         printf("すらいむのターン\n");
-        int slime_damage = rand() % 10; //すらいむが1~10からランダムのダメージをゆうしゃに与える
+        int slime_damage = rand() % 5 + 1; //すらいむが1~5からランダムのダメージをゆうしゃに与える
         yuusha_hp -= slime_damage;
         printf("ゆうしゃ%sが%dダメージをうけました！\n\n", yuusha, slime_damage);
+        //ゆうしゃのhpが1になる場合
+        if (yuusha_hp == 1) {
+            yuusha_hp += 5;
+            printf("ゆうしゃ%sがパワーをもらって5 hpをかいふくしました！\n\n", yuusha);
+        }
         //ゆうしゃが倒れた場合
         if (yuusha_hp <= 0) {
             yuusha_hp = 0;
