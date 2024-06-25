@@ -27,6 +27,7 @@ int main(void)
     int yuusha_hp = 10;
     int slime_hp = 10;
     int yuusha_damage;
+    int flag = 0;
     srand(time(NULL));
 
     //hpを表示
@@ -38,16 +39,25 @@ int main(void)
     //勇者のhpが0じゃないとゲームが続く
     while (yuusha_hp > 0) {
         printf("ゆうしゃ%sのターン\n", yuusha);
-        printf("ダメージを入力してください:");
+        printf("ダメージを入力してください（999を入力してあきらめる）:");
         scanf_s("%d", &yuusha_damage);
         //入力したダメージを10より小さくする
-        while (yuusha_damage > 10) {
-            printf("10よりちいさいダメージを入力してください。\n");
-            printf("ダメージを入力してください:");
-            scanf_s("%d", &yuusha_damage);
-            if (yuusha_damage <= 10) {
+        while (yuusha_damage > 5) {
+            if (yuusha_damage == 999) {
+                flag = 1;
                 break;
             }
+            printf("5よりちいさいダメージを入力してください。\n");
+            printf("ダメージを入力してください（999を入力してあきらめる）:");
+            scanf_s("%d", &yuusha_damage);
+            if (yuusha_damage <= 5) {
+                break;
+            }
+        }
+        //途中で諦める場合
+        if (flag == 1) {
+            printf("ゆうしゃ%sがにげた！\nすらいむがかった！\n", yuusha);
+            break;
         }
         slime_hp -= yuusha_damage;
         printf("すらいむが%dダメージをうけた！\n\n", yuusha_damage);
