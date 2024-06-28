@@ -1,6 +1,7 @@
 ﻿#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 //hpを表示する関数
 void printhp(int hp) {
@@ -21,11 +22,13 @@ int main(void)
     char yuusha[10] = "";
     printf("ゆうしゃのなまえ:");
     fgets(yuusha, sizeof(yuusha), stdin);
+    yuusha[strcspn(yuusha, "\n")] = 0;
     printf("ゆうしゃ%sのすらいむをたおすものがたりがはじまりました！\n\n", yuusha);
 
     //hpなどの数字の初期化
     int yuusha_hp = 10;
     int slime_hp = 10;
+    int slime_heal = 0;
     int yuusha_damage;
     int flag = 0;
     srand(time(NULL));
@@ -63,8 +66,9 @@ int main(void)
         printf("すらいむが%dダメージをうけた！\n\n", yuusha_damage);
         //すらいむのhpが1になる場合
         if (slime_hp == 1) {
-            slime_hp += 3;
-            printf("すらいむがみずをすって3 hpをかいふくした！\n\n");
+            slime_heal = rand() % 5 + 1; //スライムのhp回復量を1~5からランダムにする
+            slime_hp += slime_heal;
+            printf("すらいむがみずをすって%d hpをかいふくした！\n\n", slime_heal);
         }
         //すらいむを倒した場合
         if (slime_hp <= 0) {
