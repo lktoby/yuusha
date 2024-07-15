@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +29,9 @@ int main(void)
     int yuusha_hp = 10;
     int slime_hp = 10;
     int slime_heal = 0;
+    int yuusha_choice;
     int yuusha_damage;
+    int yuusha_shield = 0;
     int flag = 0;
     srand(time(NULL));
 
@@ -42,8 +44,16 @@ int main(void)
     //勇者のhpが0じゃないとゲームが続く
     while (yuusha_hp > 0) {
         printf("ゆうしゃ%sのターン\n", yuusha);
+        printf("Please choose to attack (0) or defend (1): ");
+        scanf("%d", &yuusha_choice);
+        while (yuusha_choice != 0 && yuusha_choice != 1){
+            printf("Please enter 0 or 1:");
+            scanf("%d", &yuusha_choice);
+        }
+        
+        if (yuusha_choice == 0){ //Attack Mode (Forgive my format i'm using online compiler)
         printf("ダメージを入力してください（999を入力してあきらめる）:");
-        scanf_s("%d", &yuusha_damage);
+        scanf("%d", &yuusha_damage);
         //入力したダメージを10より小さくする
         while (yuusha_damage > 5) {
             if (yuusha_damage == 999) {
@@ -52,7 +62,7 @@ int main(void)
             }
             printf("5よりちいさいダメージを入力してください。\n");
             printf("ダメージを入力してください（999を入力してあきらめる）:");
-            scanf_s("%d", &yuusha_damage);
+            scanf("%d", &yuusha_damage);
             if (yuusha_damage <= 5) {
                 break;
             }
@@ -80,8 +90,22 @@ int main(void)
             printf("すらいむをたおした！\n");
             break;
         }
+        }
+        //Defense mode
+        else if (yuusha_choice == 1){
+            yuusha_shield = rand() % 5 + 1;
+            printf("Yuusha has initiated shield!\n");
+        }
         printf("すらいむのターン\n");
+        
+        
         int slime_damage = rand() % 5 + 1; //すらいむが1~5からランダムのダメージをゆうしゃに与える
+        printf("Slime does %d damage!\n", slime_damage);
+        if (slime_damage > yuusha_shield) {
+            slime_damage -= yuusha_shield; //Shield reduces slime's damage
+        } else {
+            slime_damage = 1; //At least does 1 damage
+        }
         yuusha_hp -= slime_damage;
         printf("ゆうしゃ%sが%dダメージをうけた！\n\n", yuusha, slime_damage);
         //ゆうしゃのhpが1になる場合
@@ -99,6 +123,7 @@ int main(void)
             printf("ゆうしゃ%sがたおれた！\n", yuusha);
             break;
         }
+        yuusha_shield = 0; //Reset shield
         //ターンが終わったのhpを表示
         printf("ゆうしゃ%sのhp:%d\n", yuusha, yuusha_hp);
         printhp(yuusha_hp);
